@@ -8,7 +8,7 @@ install:
 build_script:
   - set CC=./cccl
   - set CXX=./cccl
-  - set PKG_CONFIG_PATH=/mingw32/lib/pkgconfig/;%PKG_CONFIG_PATH%
+  - set PKG_CONFIG_PATH=/mingw32/lib/pkgconfig/:%PKG_CONFIG_PATH%
   - bash -c "make"
   - bash -c "make check"
 
