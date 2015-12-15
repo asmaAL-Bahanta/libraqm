@@ -2,7 +2,8 @@ platform:
   - x86
 
 install:
-  - set PATH=C:\MinGW\msys\1.0\bin;%PATH%`
+  - set PATH=C:\MinGW\msys\1.0\bin;C:\MinGW\msys\1.0\usr\bin;%PATH%`
+  - dir C:\MinGW\msys\1.0
   - bash -c "pacman -Sy"
   - bash -c "pacman -S harfbuzz fribidi"
   - appveyor DownloadFile "http://raw.githubusercontent.com/swig/cccl/master/cccl"
