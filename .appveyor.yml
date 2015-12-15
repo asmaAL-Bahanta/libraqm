@@ -1,7 +1,7 @@
 install:
   - set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
   - bash -c "pacman -Sy"
-  - bash -c "pacman -S harfbuzz fribidi"
+  - bash -c "pacman -S mingw-w64-harfbuzz mingw-w64-fribidi"
   - appveyor DownloadFile "http://raw.githubusercontent.com/swig/cccl/master/cccl"
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%
 
