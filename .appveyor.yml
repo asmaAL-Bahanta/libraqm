@@ -1,9 +1,18 @@
 install:
   - set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
-  - bash -c "pacman -Sy --noconfirm"
-  - bash -c "pacman -S --noconfirm mingw-w64-i686-harfbuzz mingw-w64-i686-fribidi"
-  - bash -c "pacman -Ql mingw-w64-i686-glib2"
   - appveyor DownloadFile "http://raw.githubusercontent.com/swig/cccl/master/cccl"
+  - ps >-
+    bash -c @"
+      pacman -Sy --noconfirm
+      pacman -S --noconfirm mingw-w64-i686-harfbuzz mingw-w64-i686-fribidi
+      G_MAJOR=$(grep 'GLIB_MAJOR_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* '//)
+      G_MINOR=$(grep 'GLIB_MINOR_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* '//)
+      G_MICRO=$(grep 'GLIB_MICRO_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* '//)
+      echo $G_MAJOR.$G_MINOR.$G_MICRO
+      wget http://ftp.gnome.org/pub/GNOME/sources/glib/$G_MAJOR.$G_MINOR/glib-$G_MAJOR.$G_MINOR.$G_MICRO.tar.xz
+      tar xf glib-$G_MAJOR.$G_MINOR.$G_MICRO.tar.xz
+      cp glib-$G_MAJOR.$G_MINOR.$G_MICRO/glib/glibconfig.h.win32 /mingw32/lib/glib-2.0/include/glibconfig.h
+    "@
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%
 
 build_script:
@@ -11,6 +20,8 @@ build_script:
   - set CXX=./cccl
   - set PKG_CONFIG_PATH=/mingw32/lib/pkgconfig/:%PKG_CONFIG_PATH%
   - bash -c "make"
+
+test_script:
   - bash -c "make check"
 
 # disable automatic tests
