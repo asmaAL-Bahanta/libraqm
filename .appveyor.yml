@@ -2,13 +2,13 @@ install:
   - set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
   - bash -c "pacman -Sy --noconfirm"
   - bash -c "pacman -S --noconfirm mingw-w64-i686-harfbuzz mingw-w64-i686-fribidi"
-  - bash -c "pacman -Ql mingw-w64-i686-harfbuzz"
   - appveyor DownloadFile "http://raw.githubusercontent.com/swig/cccl/master/cccl"
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%
 
 build_script:
   - set CC=./cccl
   - set CXX=./cccl
+  - set PKG_CONFIG_PATH=/mingw32/lib/pkgconfig/;%PKG_CONFIG_PATH%
   - bash -c "make"
   - bash -c "make check"
 
