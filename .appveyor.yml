@@ -6,9 +6,9 @@ install:
       bash -c @"
         pacman -Sy --noconfirm;
         pacman -S --noconfirm mingw-w64-i686-harfbuzz mingw-w64-i686-fribidi;
-        G_MAJOR=$(grep 'GLIB_MAJOR_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
-        G_MINOR=$(grep 'GLIB_MINOR_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
-        G_MICRO=$(grep 'GLIB_MICRO_VERSION \(.*.\)' /mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
+        G_MAJOR=$(grep 'GLIB_MAJOR_VERSION \(.*.\)' /c/msys64/mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
+        G_MINOR=$(grep 'GLIB_MINOR_VERSION \(.*.\)' /c/msys64/mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
+        G_MICRO=$(grep 'GLIB_MICRO_VERSION \(.*.\)' /c/msys64/mingw32/lib/glib-2.0/include/glibconfig.h | sed -e 's/.* //');
         wget http://ftp.gnome.org/pub/GNOME/sources/glib/$G_MAJOR.$G_MINOR/glib-$G_MAJOR.$G_MINOR.$G_MICRO.tar.xz;
         tar xf glib-$G_MAJOR.$G_MINOR.$G_MICRO.tar.xz;
         cp glib-$G_MAJOR.$G_MINOR.$G_MICRO/glib/glibconfig.h.win32 /mingw32/lib/glib-2.0/include/glibconfig.h;
